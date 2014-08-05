@@ -1,0 +1,4 @@
+OPEN libxlog.a
+ADDLIB liblog4cplus.a
+SAVE
+END
