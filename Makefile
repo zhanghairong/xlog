@@ -21,6 +21,12 @@ $(TARGET):$(OBJS) $(LIBS)
 
 clean:
 	$(RM) *.o $(TARGET)
-  
+
+INSTALLDIR=$(HOME)/local/xlog2
 install:
-	cp libxlog.a $(HOME)/local/xlog/lib/
+	if [ ! -d "$(INSTALLDIR)/lib/" ];  then mkdir -p $(INSTALLDIR)/lib; fi;
+	if [ ! -d "$(INSTALLDIR)/include/" ];  then mkdir -p $(INSTALLDIR)/include; fi;
+	cp ILog.h $(INSTALLDIR)/include/;
+	cp LogManager.h $(INSTALLDIR)/include/;
+	cp -r log4cplus $(INSTALLDIR)/include/;
+	cp libxlog.a $(INSTALLDIR)/lib/;
