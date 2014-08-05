@@ -22,7 +22,7 @@ $(TARGET):$(OBJS) $(LIBS)
 clean:
 	$(RM) *.o $(TARGET)
 
-INSTALLDIR=$(HOME)/local/xlog2
+INSTALLDIR=$(HOME)/local/xlog
 install:
 	if [ ! -d "$(INSTALLDIR)/lib/" ];  then mkdir -p $(INSTALLDIR)/lib; fi;
 	if [ ! -d "$(INSTALLDIR)/include/" ];  then mkdir -p $(INSTALLDIR)/include; fi;
