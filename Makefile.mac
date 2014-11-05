@@ -1,0 +1,32 @@
+INCLUDES    = -I./ -I./log4cplus
+CFLAGS      += -O $(INCLUDES)
+
+TARGET      = libxlog.a
+LIBS        = liblog4cplus.a
+OBJS        = LogFromLog4cplus.o LogManager.o
+TMPDIR      = tmptarget
+
+all:$(TARGET)
+
+$(TARGET):$(OBJS) $(LIBS)
+	if [ -d $(TMPDIR) ]; then rm -rf $(TMPDIR); fi; mkdir $(TMPDIR);
+	mv *.o "$(TMPDIR)/"; cp $(LIBS) "$(TMPDIR)/";
+	cd $(TMPDIR); ar -x $(LIBS);
+	ar -r $(TARGET) $(TMPDIR)/*.o;
+	ranlib $(TARGET);
+	rm -rf $(TMPDIR);
+
+%.o:%.cpp
+	g++ -c -fPIC $(CFLAGS) $< -o $@
+
+clean:
+	$(RM) *.o $(TARGET)
+
+INSTALLDIR=$(HOME)/local/xlog
+install:
+	if [ ! -d "$(INSTALLDIR)/lib/" ];  then mkdir -p $(INSTALLDIR)/lib; fi;
+	if [ ! -d "$(INSTALLDIR)/include/" ];  then mkdir -p $(INSTALLDIR)/include; fi;
+	cp ILog.h $(INSTALLDIR)/include/;
+	cp LogManager.h $(INSTALLDIR)/include/;
+	cp -r log4cplus $(INSTALLDIR)/include/;
+	cp libxlog.a $(INSTALLDIR)/lib/;
